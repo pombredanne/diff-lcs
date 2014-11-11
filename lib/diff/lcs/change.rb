@@ -40,7 +40,7 @@ class Diff::LCS::Change
   end
 
   def self.from_a(arr)
-    arr = arr.flatten
+    arr = arr.flatten(1)
     case arr.size
     when 5
       Diff::LCS::ContextChange.new(*(arr[0...5]))
@@ -54,6 +54,7 @@ class Diff::LCS::Change
   include Comparable
 
   def ==(other)
+    (self.class == other.class) and
     (self.action == other.action) and
     (self.position == other.position) and
     (self.element == other.element)
@@ -159,6 +160,7 @@ class Diff::LCS::ContextChange < Diff::LCS::Change
   end
 
   def ==(other)
+    (self.class == other.class) and
     (@action == other.action) and
     (@old_position == other.old_position) and
     (@new_position == other.new_position) and
